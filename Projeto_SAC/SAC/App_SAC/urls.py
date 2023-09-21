@@ -21,7 +21,6 @@ urlpatterns = [
     path('cons_depto', views.cons_depto, name='cons_depto'),
     path('edit_depto/<int:id>', views.edit_depto, name='edit_depto'),
 
-
     path('cad_situacao', views.cad_situacao, name='cad_situacao'),
     path('salvar_situacao_novo', views.salvar_situacao_novo, name='salvar_situacao_novo'),
     path('cons_situacao', views.cons_situacao, name='cons_situacao'),
