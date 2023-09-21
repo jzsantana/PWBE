@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +77,7 @@
         
         <hr>
         
-        <form id="form_busca_cliente" class="form_busca_cliente" method="POST" action="">
+        <form id="form_busca_cliente" class="form_busca_cliente" method="POST" action="{% url 'reg_atend_busca_cliente' %}">{% csrf_token %}
 
 
             <div class="input_pesquisar_cliente">
@@ -97,7 +97,7 @@
                 <td>{{igs.telefone}}</td>
                 <td>{{igs.email}}</td>
                 <td>{{igs.observacao}}</td>
-                <td><a href="">34</a></td>
+                <td><a href="/sel_cliente/{{igs.id}}">{{igs.id}}</a></td>
 
             </tr>
             {% endfor %}
@@ -105,7 +105,7 @@
         <hr>
 
 
-        <form id="form" class="form"method="POST" action="">
+        <form id="form" class="form"method="POST" action="">{% csrf_token %}
             
                 
                 <div class="form-content">

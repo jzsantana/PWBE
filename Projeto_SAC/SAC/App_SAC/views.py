@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
-from .models import Cliente, Atendente, Departamento, Situacao
+from .models import Cliente, Atendente, Departamento, Situacao, Atendimento
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage
+from datetime import datetime
 
 
 def abre_index(request):
@@ -403,7 +404,7 @@ def edit_situacao(request, id):
     dados_editar = get_object_or_404(Situacao, pk=id)
     return render(request, 'Edit_Situacao.html', {'usuario_logado': usuario_logado, 'dados_da_situacao': dados_editar})
 
-
+@login_required
 def salvar_situacao_editado(request):
     usuario_logado = request.user.username
     if request.method == 'POST':
@@ -420,3 +421,61 @@ def salvar_situacao_editado(request):
 
         messages.info(request, 'Situação ' + descricao_situacao + ' editado com sucesso')
         return render(request, 'Cons_Situacao.html', {'usuario_logado': usuario_logado})
+
+
+@login_required
+def reg_atendimento(request):
+    usuario_logado = request.user.username
+    cons_users = User.objects.all()
+    cons_depto = Departamento.objects.all()
+    
+    data_e_hora = datetime.now()
+    
+    data_e_hora = data_e_hora.strftime("%d/%m/%Y %H:%M:%S")
+    
+    return render(request, 'Reg_atendimento_busca.html', {'usuario_logado': usuario_logado, 'cons_users': cons_users, 'cons_depto': cons_depto})     
+    
+    
+@login_required
+def reg_atend_busca_cliente(request):
+    usuario_logado = request.user.username
+    cons_depto = Departamento.objects.all()
+    
+    data_e_hora = datetime.now()
+
+    data_e_hora = data_e_hora.strftime("%d/%m/%Y %H:%M:%S")
+    
+    page = request.GET.get('page')
+    
+    if page:
+        dado_pesquisa = request.GET.get('dado_pesquisa')
+        clientes_lista = Cliente.objects.filter(nome__icontains=dado_pesquisa)
+        paginas = Paginator(clientes_lista, 3)
+        clientes = paginas.get_page(page)
+        return render(request, 'Reg_Atendimento_busca.html', {'dados_clientes': clientes, 'dado_pesquisa': dado_pesquisa})
+    
+    if dado_pesquisa_nome != None and dado_pesquisa_nome != '':
+        clientes_lista = Cliente.objects.filter(nome__icontains=dado_pesquisa_nome)
+        paginas = Paginator(clientes_lista, 2)
+        page = request.GET.get('page')
+        
+        clientes = paginas.get_page(page)
+        return render(request, 'Reg_Atendimento_busca.html', {'dados_clientes': clientes, 'dado_pesquisa': dado_pesquisa})
+        
+    else:
+        return render(request, 'Reg_Atendimento_busca.html', {'usuario_logado': usuario_logado, 'cons_depto': cons_depto})
+    
+    
+@login_required
+def sel_cliente(request, id):
+    usuario_logado = request.user.username
+    
+    cons_depto = Departamento.objects.all()
+    data_e_hora = datetime.now()
+    data_e_hora = data_e_hora.strftime("%d/%m/%Y %H:%M:%S")
+
+    dados_clientes = get_object_or_404(Cliente, pk=id)
+    return render (request, 'Reg_Atendimento_busca.html', {'cliente_sel': dados_clientes, 'usuario_logado': usuario_logado,
+                                                     'cons_depto': cons_depto, 'data_e_hora': data_e_hora})    
+    
+    

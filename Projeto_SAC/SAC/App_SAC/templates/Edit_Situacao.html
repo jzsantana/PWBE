@@ -1,8 +1,8 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Cons_Situacao.css' %}">
 
     <title>Programação Web Back End</title>
 </head>
@@ -34,27 +34,28 @@
 <nav class="menu">
     <ul>
        
+        {% if user.is_authenticated %}
         <li><a href="">Cadastros</a>
             <ul>
-                <li><a href="Cad_Cliente.html">Clientes</a></li>
-                <li><a href="Cad_Depto.html">Departamentos</a></li>
-                <li><a href="Cad_Atendente.html">Atendentes</a></li>
-                <li><a href="Cad_Situacao.html">Situações</a></li>
+                <li><a href="{% url 'cad_cliente' %}">Clientes</a></li>
+                <li><a href="{% url 'cad_depto' %}">Departamentos</a></li>
+                <li><a href="{% url 'cad_atend' %}">Atendentes</a></li>
+                <li><a href="{% url 'cad_situacao' %}">Situações</a></li>
             </ul>
-        </li>
+        </li>   
         <li><a href="">Consultar</a>
             <ul>
-                <li><a href="Cons_Cliente.html">Clientes</a></li>
-                <li><a href="Cons_Depto.html">Departamentos</a></li>
-                <li><a href="Cons_Atendente.html">Atendentes</a></li>
-                <li><a href="Cons_Situacao.html">Situações</a></li>
+                <li><a href="{% url 'cons_cliente' %}">Clientes</a></li>
+                <li><a href="{% url 'cons_depto' %}">Departamentos</a></li>
+                <li><a href="{% url 'cons_atend' %}">Atendentes</a></li>
+                <li><a href="{% url 'cons_situacao' %}">Situações</a></li>
             </ul>
-        </li>
+        </li>    
         <li><a href="Registrar.html">Registrar Atendimento</a></li>
         <li><a href="Consultar.html">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
-        <li> | Usuário logado: {{usuario_logado}}</a></li>
-        
+        <li> | Usuário logado: {{usuario_logado}}</li>
+        {% endif %}
     </ul> 
 </nav>      
 <body>

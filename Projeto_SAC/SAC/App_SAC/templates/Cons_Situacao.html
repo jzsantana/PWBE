@@ -1,4 +1,4 @@
-
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +10,7 @@
 <header class="login">
     <div class="fundo_menu">
         <div class="logo_senai">
-             <a href="/"><img src="imagens/logo_senai.png" /></a>
+             <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
         </div>
         <div class="nome_sistema">
              Programação Web Back End<br>
@@ -28,27 +28,28 @@
 
 <nav class="menu">
     <ul>
-       
+        {% if user.is_authenticated %}
         <li><a href="">Cadastros</a>
             <ul>
-                <li><a href="Cad_Cliente.html">Clientes</a></li>
-                <li><a href="Cad_Depto.html">Departamentos</a></li>
-                <li><a href="Cad_Atendente.html">Atendentes</a></li>
-                <li><a href="Cad_Situacao.html">Situações</a></li>
+                <li><a href="{% url 'cad_cliente' %}">Clientes</a></li>
+                <li><a href="{% url 'cad_depto' %}">Departamentos</a></li>
+                <li><a href="{% url 'cad_atend' %}">Atendentes</a></li>
+                <li><a href="{% url 'cad_situacao' %}">Situações</a></li>
             </ul>
-        </li>
+        </li>   
         <li><a href="">Consultar</a>
             <ul>
-                <li><a href="Cons_Cliente.html">Clientes</a></li>
-                <li><a href="Cons_Depto.html">Departamentos</a></li>
-                <li><a href="Cons_Atendente.html">Atendentes</a></li>
-                <li><a href="Cons_Situacao.html">Situações</a></li>
+                <li><a href="{% url 'cons_cliente' %}">Clientes</a></li>
+                <li><a href="{% url 'cons_depto' %}">Departamentos</a></li>
+                <li><a href="{% url 'cons_atend' %}">Atendentes</a></li>
+                <li><a href="{% url 'cons_situacao' %}">Situações</a></li>
             </ul>
-        </li>
+        </li>    
         <li><a href="Registrar.html">Registrar Atendimento</a></li>
         <li><a href="Consultar.html">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
-        <li> | Usuário logado: {{usuario_logado}}</a></li>
+        <li> | Usuário logado: {{usuario_logado}}</li>
+        {% endif %}
        
     </ul> 
 </nav> 
@@ -72,7 +73,7 @@
        
         
 
-        <form id="form" class="form" >
+        <form id="form" class="form" method="POST" action="{% url 'cons_situacao' %}" >{% csrf_token %}
 
             
             <div class="seleciona_todos">
@@ -106,6 +107,12 @@
             {{ todas_situacoes.number }} de {{ todas_situacoes.paginator.num_pages }}
         </span>
 
+        {% if todos_departamento.has_next %}
+        <a href="?page{{todos_departamento.next_page_number}}&dado_pesquisa={{dado_pesquisa}}">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+        {% endif %}
+
         
         <table>
             <tr>
@@ -114,15 +121,14 @@
                 <th>Ativa</th>
                 <th>Editar</th>
             </tr>
-            
+            {% for igs in todas_situacao  %}
             <tr>
-                <td>Atendimento</td>
-                <td>Utilizar quando inciar o atendimento </td>
+                <td>{{igs.descricao_situacao}}</td>
+                <td>{{igs.info_situacao}} </td>
                 <td>Sim</td>
                 <td><a href="/edit_situacao/{{igs.id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                
             </tr>
-            
+            {% endfor %}
         </table>
 
     </div>    
