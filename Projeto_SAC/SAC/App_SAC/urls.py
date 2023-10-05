@@ -31,9 +31,12 @@ urlpatterns = [
     path('edit_situacao/<int:id>', views.edit_situacao, name='edit_situacao'),
     path('salvar_situacao_editado', views.salvar_situacao_editado, name='salvar_situacao_editado'),
 
-    # atendimento 
-    path('reg_atendimento', views.reg_atendimento, name='reg_atendimento'),
+    # atendimento
+    # path('reg_atendimento', views.reg_atendimento, name='reg_atendimento'),
+    path('salvar_atendimento_novo', views.salvar_atendimento_novo, name='salvar_atendimento_novo'),
     path('reg_atend_busca_cliente', views.reg_atend_busca_cliente, name='reg_atend_busca_cliente'),
-    path('sel_cliente', views.sel_cliente, name='sel_cliente'),
-    
+    path('sel_cliente/<int:id>', views.sel_cliente, name='sel_cliente'),
+
+    path('reg_atendimento_api', views.reg_atend_api, name='reg_atend_api'),
+    path('sel_cliente/<int:id>', views.sel_cliente, name='sel_cliente'),
 ]

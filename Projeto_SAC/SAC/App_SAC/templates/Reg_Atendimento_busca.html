@@ -30,7 +30,7 @@
 
 <nav class="menu">
     <ul>
-       
+       {% if user.is_authenticated %}
         <li><a href="Cadastros">Cadastros</a>
             <ul>
                 <li><a href="Cad_Cliente.html">Clientes</a></li>
@@ -42,9 +42,9 @@
         <li><a href="Registrar">Registrar Atendimento</a></li>
         <li><a href="Consultar">Consultar Atendimento</a></li>
         <li><a href="Relatorios">Relatórios</a></li>
-        <li> | Usuário logado: {{usuario_logado}}</a></li>
-        
-    </ul> 
+        <li> | Usuário logado: {{usuario_logado}}</li>
+        {% endif %}
+    </ul>
 </nav> 
      
 <body>
@@ -53,15 +53,14 @@
         <section class="enquadramento">
             <h1> Registrar Atendimento</h1>
         </section>
-
         
+             {% if messages %}
             <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
-               
-                      <li style="list-style: none;" {% if mensagem.tags %}class="alert alert-{{message.tags}}"{% endif %}>{{mensagem}}</li>
-
-                
+                {% for mensagem in messages %}
+                   <li style="list-style: none;" {% if mensagem.tags %}class="alert alert-{{message.tags}}"{% endif %}>{{mensagem}}</li>
+                {% endfor %}
             </ul>
-        
+        {% endif %}
 
         <div class = "num_hora">
             <div class="informe num_atend">
@@ -76,13 +75,11 @@
         </div>
         
         <hr>
-        
         <form id="form_busca_cliente" class="form_busca_cliente" method="POST" action="{% url 'reg_atend_busca_cliente' %}">{% csrf_token %}
-
 
             <div class="input_pesquisar_cliente">
                 <label for="sel_cliente">Cliente</label>
-                <input type="text" id="sel_cliente" name="sel_cliente" value="" placeholder="Selecione o Cliente" />
+                <input type="text" id="sel_cliente" name="sel_cliente" value="{{cliente_sel.nome}}" placeholder="Selecione o Cliente" />
             </div>
             <div class="btn_pesquisar_cliente">
                 <button type="submit" id="btnPesquisar_Cliente" >Pesquisar</button>
@@ -98,15 +95,12 @@
                 <td>{{igs.email}}</td>
                 <td>{{igs.observacao}}</td>
                 <td><a href="/sel_cliente/{{igs.id}}">{{igs.id}}</a></td>
-
             </tr>
             {% endfor %}
         </table>
         <hr>
 
-
-        <form id="form" class="form"method="POST" action="">{% csrf_token %}
-            
+        <form id="form" class="form" method="POST" action="{% url 'salvar_atendimento_novo' %}">{% csrf_token %}
                 
                 <div class="form-content">
                     <label for="solicitacao">Solicitação</label>
@@ -125,24 +119,14 @@
                     </select>
                 </div>
                 
-                
                 <div class="botoes">
                     <div class="botao_confirmar">
                         <button id="btnConfirmar" class="btn_conf_cancel btn_confirmar">Confirmar</button>
                     </div>
-
-
                 </div>
         </form>
-
-
-
     </div>    
     </div>
-
-
-
-
 
 </body>
 

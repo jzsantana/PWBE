@@ -58,3 +58,14 @@ class Atendimento(models.Model):
     def __str__(self):
         return self.id
 
+
+class Situacao_Atendimento(models.Model):
+    id_situacao = models.ForeignKey(Situacao, null=True, verbose_name='Situacao',
+                                    related_name='situacoes', on_delete=models.PROTECT)
+    id_atendimento = models.ForeignKey(Atendimento, null=True, verbose_name='Atendimento',
+                                       related_name='atendimentos', on_delete=models.PROTECT)
+    comentario = models.TextField()
+    data_hora = models.DateTimeField()
+
+    def __str__(self):
+        return self.comentario
