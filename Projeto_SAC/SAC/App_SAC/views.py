@@ -549,3 +549,26 @@ def reg_atend_api(request):
                                                           'cons_users': cons_users,
                                                           'cons_depto': cons_depto,
                                                           'data_e_hora': data_e_hora})
+
+
+@login_required
+def cons_lista_atendimento(request):
+    usuario_logado = request.user.username
+
+    dado_pesquisa_numero = request.POST.get('numero')
+
+    if dado_pesquisa_numero:
+        atendimento = Atendimento.objects.filter(id=dado_pesquisa_numero)
+        if atendimento:
+            return render(request, 'Cons_Atendimento.html', {
+                'atendimento': atendimento,
+                'dado_pesquisa_numero': dado_pesquisa_numero
+            })
+    else:
+        ultimo_atendimento = Atendimento.objects.last()
+        seis_ultimos = ultimo_atendimento.id - 5
+
+        atendimento = Atendimento.objects.filter(id__gte=seis_ultimos).order_by('-id')
+        return render(request, 'Cons_Lista_Atendimento.html', {'Atendimento': atendimento,
+                                                               'usuario_logado': usuario_logado})
+
