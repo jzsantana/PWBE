@@ -27,8 +27,6 @@
 
 <nav class="menu">
     <ul>
-
-       
         <li><a href="">Cadastros</a>
             <ul>
                 <li><a href="Cad_Cliente.html">Clientes</a></li>
@@ -49,9 +47,6 @@
         <li><a href="{% url 'cons_lista_atendimento' %}">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
         <li> | Usuário logado: {{usuario_logado}}</a></li>
-       
-
-
 
     </ul>
 </nav> 
@@ -62,11 +57,7 @@
         <section class="enquadramento">
             <h1> Consultar Atendimento</h1>
         </section>
-        
-        
-        
-        
-        
+
         <!-- https://www.w3schools.com/cssref/index.php -->
 
         <form id="form" class="form" method="POST" action="">{% csrf_token %}
@@ -98,7 +89,6 @@
                  </select>
             </div>
                 
-                
                 <div class="botoes">
                     <div class="botao_consultar">
                         <button id="btnConsultar" class="btn_cons_cancel btn_consultar">Consultar</button>
@@ -118,15 +108,16 @@
                 <th>Depto Resp.</th>
                 <th>Solicitação</th>
             </tr>
-            
+
+            {% for igs in cons_situ_atendimento %}
             <tr>
                 <td style="text-align: center;"><a href="/cons_atendimento/{{igs.id}}"><i class="fa-solid fa-pen-to-square"></i>{{igs.id}}</a> </td>
-                <td>2023-10-04</td>
-                <td>Barak Obama</td>
-                <td>Engenharia</td>
-                <td>Solicita atendimento com urgência</td>
+                <td>{{igs.atendimento}}</td>
+                <td>{{igs.data_e_hora}}</td>
+                <td>{{igs.cons_depto}}</td>
+                <td>{{igs.cons_situ}}</td>
             </tr>
-            
+            {% endfor %}
 
 
 

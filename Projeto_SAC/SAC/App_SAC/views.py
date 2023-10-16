@@ -572,3 +572,20 @@ def cons_lista_atendimento(request):
         return render(request, 'Cons_Lista_Atendimento.html', {'Atendimento': atendimento,
                                                                'usuario_logado': usuario_logado})
 
+
+@login_required
+def cons_atendimento(request, id):
+    usuario_logado = request.user.username
+    atendimento = Atendimento.objects.get(id=id)
+    cons_depto = Departamento.objects.all()
+    cons_situ = Situacao.objects.all()
+
+    cons_situ_atendimento = Situacao_Atendimento.objects.filter(id_atendimento=id).values("comentario", "data_e_hora",
+                                                                        "id_situacao__descricao_situacao",
+                                                                        "id_situacao__departamento__descricao_departamento",
+                                                                        "id_atendimento__atendente__nome_atend").order_by('-id')
+
+    return render(request, 'Cons_Atendimento', {
+                            'atendimento': atendimento, 'cons_situ_atendimento': cons_situ_atendimento,
+                            'cons_depto': cons_depto, 'cons_situ': cons_situ, 'usuario_logado': usuario_logado})
+

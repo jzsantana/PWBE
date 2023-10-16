@@ -40,6 +40,7 @@ urlpatterns = [
     path('reg_atendimento_api', views.reg_atend_api, name='reg_atend_api'),
     path('sel_cliente/<int:id>', views.sel_cliente, name='sel_cliente'),
 
+    # urls consulta atendimento
     path('cons_lista_atendimento', views.cons_lista_atendimento, name='cons_lista_atendimento'),
-    # path('cons_atendimento/<int:id>', views.cons_atendimento, name='cons_atendimento'),
+    path('cons_atendimento/<int:id>', views.cons_atendimento, name='cons_atendimento'),
 ]
