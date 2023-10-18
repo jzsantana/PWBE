@@ -21,6 +21,7 @@ from App_SAC.api import viewsets as apisviewsets
 
 route = routers.DefaultRouter()
 route.register(r'api_cliente', apisviewsets.ClienteViewSet, basename="cliente")
+route.register(r'api_atendimento', apisviewsets.AtendimentoViewSet, basename="atendimento")
 
 urlpatterns = [
     path('admin/', admin.site.urls),

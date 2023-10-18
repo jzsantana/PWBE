@@ -7,3 +7,9 @@ class ClienteSerializer(serializers.ModelSerializer):
         model = models.Cliente
         fields = '__all__'
 
+
+class AtendimentoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Atendimento
+        fields = '__all__'
+
