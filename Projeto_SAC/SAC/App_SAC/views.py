@@ -585,7 +585,13 @@ def cons_atendimento(request, id):
                                                                         "id_situacao__departamento__descricao_departamento",
                                                                         "id_atendimento__atendente__nome_atend").order_by('-id')
 
-    return render(request, 'Cons_Atendimento', {
-                            'atendimento': atendimento, 'cons_situ_atendimento': cons_situ_atendimento,
-                            'cons_depto': cons_depto, 'cons_situ': cons_situ, 'usuario_logado': usuario_logado})
+    return render(
+        request,
+        'Cons_Atendimento.html',
+        {'atendimento': atendimento,
+         'cons_situ_atendimento': cons_situ_atendimento,
+         'cons_depto': cons_depto,
+         'cons_situ': cons_situ,
+         'usuario_logado': usuario_logado}
+        )
 

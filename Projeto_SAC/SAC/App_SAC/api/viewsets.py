@@ -20,3 +20,5 @@ class ClienteViewSet(viewsets.ModelViewSet):
 class AtendimentoViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.AtendimentoSerializer
     queryset = models.Atendimento.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['cliente__nome', 'cliente__telefone', 'cliente__email', 'cliente__observacao', 'solicitacao']
